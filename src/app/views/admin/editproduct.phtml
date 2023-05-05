@@ -1,0 +1,53 @@
+<?php
+print_r($d);
+
+?>
+<form action="update" method="POST">
+     
+<div class="form-group">
+    <label class="col-md-4 control-label" for="product_id">PRODUCT ID</label>
+    <div class="col-md-4">
+        <input id="product_id" name="id" placeholder="PRODUCT ID" class="form-control input-md"
+        value=<?php echo $d[0]['id']?> required="" type="number">
+
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-md-4 control-label" for="product_name">PRODUCT NAME</label>
+    <div class="col-md-4">
+        <input id="product_name" name="name" placeholder="PRODUCT NAME" class="form-control input-md"
+          value=<?php echo $d[0]['name']?>  required="" type="text">
+
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-md-4 control-label" for="product_id">PRODUCT IMAGE</label>
+    <div class="col-md-4">
+        <input id="product_id" name="image" placeholder="PRODUCT IMAGE" class="form-control input-md"
+          value=<?php echo $d[0]['image']?> required="" type="text">
+
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-md-4 control-label" for="available_quantity">AVAILABLE QUANTITY</label>
+    <div class="col-md-4">
+        <input id="available_quantity" name="quantity" placeholder="AVAILABLE QUANTITY" class="form-control input-md"
+           value=<?php echo $d[0]['stock']?> required="" type="number">
+
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-md-4 control-label" for="available_quantity">PRODUCT PRICE</label>
+    <div class="col-md-4">
+        <input id="available_quantity" name="price" placeholder="PRODUCT PRICE" class="form-control input-md"
+          value=<?php echo $d[0]['price']?> required="" type="number">
+
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-md-4 control-label" for="singlebutton">UPDATE Product</label>
+    <div class="col-md-4">
+        <button id="singlebutton" name="singlebutton" class="btn btn-primary">UPDATE</button>
+    </div>
+</div>
+</form>

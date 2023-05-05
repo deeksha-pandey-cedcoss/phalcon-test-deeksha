@@ -1,0 +1,93 @@
+<?php
+echo $this->tag->linkTo(["product/add" , "Add Products Here!", "class"=>"btn btn-secondary m-3 "]);
+?>
+
+<h3>ALL PRODUCTS</h3>
+<table class="table table-success table-striped">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">NAME</th>
+      <th scope="col">IMAGE</th>
+      <th scope="col">PRICE</th>
+      <th scope="col">STOCK</th>
+      <th scope="col">ACTION</th>
+
+    </tr>
+  </thead>
+  <?php
+echo "<tbody>";
+foreach ($d as $key => $value)
+{
+  echo " <tr><td>$value[id]</td>
+  <td>$value[name]</td>
+  <td><img src='".$value['image']."' width='100'></td>
+  <td>$value[price]</td>
+  <td>$value[stock]</td><td>";
+  echo $this->tag->linkTo(["admin/removeproduct?id=".$value['id'],"REMOVE","class"=>"btn btn-danger m-1"]);
+  echo $this->tag->linkTo(["admin/editproduct?id=".$value['id'],"EDIT","class"=>"btn btn-secondary m-1"]);
+  echo "</td>";
+}
+echo "</tbody>";
+  ?>
+  </table>
+  <h3>ALL USERS</h3>
+  <table class="table table-dark table-striped">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">NAME</th>
+      <th scope="col">ROLE</th>
+      <th scope="col">EMAIL</th>
+      <th scope="col">PASSWORD</th>
+      <th scope="col">ACTION</th>
+
+    </tr>
+  </thead>
+  <?php
+
+
+echo "<tbody>";
+foreach ($dat as $key => $value)
+{
+  echo " <tr><td>$value[id]</td>
+  <td>$value[name]</td>
+  <td>$value[role]</td>
+  <td>$value[email]</td>
+  <td>$value[password]</td><td>";
+  echo $this->tag->linkTo(["admin/removeuser?id=".$value['id'],"REMOVE","class"=>"btn btn-danger m-1"]);
+  echo $this->tag->linkTo(["admin/edituser?id=".$value['id'],"EDIT","class"=>"btn btn-secondary m-1"]);
+  echo "</td>";
+}
+echo "</tbody>";
+  ?>
+</table>
+<h3>ALL ORDERS</h3>
+  <table class="table table-success table-striped">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">USER ID</th>
+      <th scope="col">PRODUCT ID</th>
+      <th scope="col">QUANTITY</th>
+      <th scope="col">STATUS</th>
+      <th scope="col">ACTION</th>
+
+    </tr>
+  </thead>
+  <?php
+echo "<tbody>";
+foreach ($data as $key => $value)
+{
+  echo " <tr><td>$value[id]</td>
+  <td>$value[user_id]</td>
+  <td>$value[product_id]</td>
+  <td>$value[quantity]</td>
+  <td>$value[status]</td><td>";
+  echo $this->tag->linkTo(["admin/changestatus?id=".$value['id'],"Change status","class"=>"btn btn-danger m-1"]);
+  echo "</td>";
+}
+echo "</tbody>";
+  ?>
+
+  

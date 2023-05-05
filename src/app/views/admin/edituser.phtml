@@ -1,0 +1,61 @@
+
+<form action="updateuser" method="POST">
+   
+<div class="form-group">
+    <label class="col-md-4 control-label" for="product_id">USER ID</label>
+    <div class="col-md-4">
+        <input id="id"  name="id"  class="form-control input-md"
+         value=<?php echo $data[0]['id']?> required="" type="number">
+
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-md-4 control-label" >USER NAME</label>
+    <div class="col-md-4">
+        <input id="product_name" name="name" placeholder="PRODUCT NAME"
+         class="form-control input-md"  value=<?php echo $data[0]['name']?>  required="" type="text">
+
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-md-4 control-label" >USER ROLE</label>
+    <div class="col-md-4">
+  
+        <div class="col-md-4">
+            <label for="status">Role:</label>
+
+            <select name="status" id="role">
+                <option value="User">User</option>
+                <option value="Manager">Manager</option>
+                <option value="Accountant">Accountant</option>
+            </select>
+
+        </div>
+        <!-- <input id="role" name="role" class="form-control input-md"
+          required value=<?php echo $data[0]['role']?>  type="text"> -->
+
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-md-4 control-label" >USER EMAIL</label>
+    <div class="col-md-4">
+        <input id="email" name="email"  class="form-control input-md"
+          required value=<?php echo $data[0]['email']?>  type="text">
+
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-md-4 control-label" >USER PASSWORD</label>
+    <div class="col-md-4">
+        <input id="pass" name="pass" placeholder="PRODUCT PRICE"
+         class="form-control input-md"  value=<?php echo $data[0]['password']?> required="" type="text">
+
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-md-4 control-label" for="singlebutton">UPDATE User</label>
+    <div class="col-md-4">
+        <button id="singlebutton" name="singlebutton" class="btn btn-primary">UPDATE</button>
+    </div>
+</div>
+</form>
