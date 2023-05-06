@@ -52,9 +52,6 @@ class AdminController extends Controller
     public function changestatusAction()
     {
         print_r($_GET);
-        // die;
-
-
         $id = $_GET['id'];
 
         $order = $this->db->fetchAll(

@@ -16,7 +16,13 @@ use Phalcon\Events\Event;
 use Phalcon\Events\Manager as EventsManager;
 use Phalcon\Db\Adapter\Pdo\Mysql as DbAdapter;
 use MyApp\Handlers\Listner;
-
+use MyApp\Locale;
+use Phalcon\Cache\Adapter\Memory;
+use Phalcon\Storage\SerializerFactory;
+use Phalcon\Logger;
+use Phalcon\Logger\Adapter\Stream as lstream;
+use Phalcon\Cache;
+use Phalcon\Cache\AdapterFactory;
 
 
 
@@ -42,17 +48,16 @@ $loader->registerNamespaces(
         'MyApp\Controllers' => APP_PATH . '/controllers/',
         'MyApp\Models' => APP_PATH . '/models/',
         'Tests' => APP_PATH . '/../tests/',
+        'MyApp' => APP_PATH . '/locals/',
     ]
 );
 
 $loader->registerClasses(
     [
-        'Listner'         => APP_PATH .'/handler/Listner.php/',
-        
+        'Listner'      => APP_PATH . '/handler/Listner.php/',
+
     ]
 );
-
-$loader->register();
 
 $loader->register();
 
@@ -64,6 +69,19 @@ $container->set(
         $view = new View();
         $view->setViewsDir(APP_PATH . '/views/');
         return $view;
+    }
+);
+$container->set(
+    'cache',
+    function () {
+        $serializerFactory = new SerializerFactory();
+        $options = [
+            'defaultSerializer' => 'Json',
+            'lifetime'          => 7200,
+            'storageDir'        => APP_PATH.'/storage/cache',
+        ];
+
+        return new Memory($serializerFactory, $options);
     }
 );
 
@@ -81,20 +99,26 @@ $container->set(
         return new Escaper();
     }
 );
-
-$application = new Application($container);
-
-$eventsManager = new EventsManager();
-$eventsManager->attach(
-    'application:beforeHandleRequest',
-    new Listner()
+$container->set(
+    'db',
+    function () {
+        return new Mysql($this['config']->db->toArray());
+    }
 );
 
 $container->set(
-    'EventsManager',
-    $eventsManager
+    'config',
+    function () {
+        $fileName = '../app/assets/config.php';
+        $factory = new ConfigFactory();
+        return $config = $factory->newInstance('php', $fileName);
+    }
 );
-$application->setEventsManager($eventsManager);
+
+$container->set('locale', (new Locale())->getTranslator());
+$application = new Application($container);
+
+
 
 $container->set(
     'db',
@@ -118,10 +142,10 @@ $container->set(
                 'savePath' => '/tmp',
             ]
         );
-        
+
         $session
-        ->setAdapter($files)
-        ->start();
+            ->setAdapter($files)
+            ->start();
         return $session;
     }
 );
@@ -148,7 +172,35 @@ $container->set(
         return $dispatcher;
     }
 );
+
+$container->set(
+    'logger',
+    function () {
+
+        $adapter = new lstream(APP_PATH.'/storage/logs/main.log');
+        return  new Logger(
+            'messages',
+            [
+                'main' => $adapter,
+            ]
+        );
+    }
+);
+
+
 $application = new Application($container);
+
+$eventsManager = new EventsManager();
+$eventsManager->attach(
+    'application:beforeHandleRequest',
+    new Listner()
+);
+
+$container->set(
+    'EventsManager',
+    $eventsManager
+);
+$application->setEventsManager($eventsManager);
 try {
     // Handle the request
     $response = $application->handle(

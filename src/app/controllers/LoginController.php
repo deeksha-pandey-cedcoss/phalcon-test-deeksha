@@ -16,8 +16,7 @@ class LoginController extends Controller
     public function loginAction()
     {
 
-        // $user = new Users();
-
+       $email=$this->request->getPost('email');
         if ($this->request->isPost()) {
             $user = Users::findFirst(array(
                 'email = :email: and password = :password:', 'bind' =>
@@ -30,8 +29,9 @@ class LoginController extends Controller
                 $this->session->set('user-id', $user->id);
                 $this->response->redirect("product");
             } else {
+                $this->logger->error("Wrong Credentials for $email ");
                 echo "Wrong credentials";
-                die;
+                $this->response->redirect("login");
             }
         }
     }
@@ -39,5 +39,7 @@ class LoginController extends Controller
     public function logoutAction()
     {
         $this->session->destroy();
+        $this->session->remove('auth');
+        $this->response->redirect('login');
     }
 }

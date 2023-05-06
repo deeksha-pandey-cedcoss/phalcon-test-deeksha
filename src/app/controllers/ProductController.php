@@ -41,7 +41,7 @@ class ProductController extends Controller
 
         if ($success) {
             echo "Added successfully";
-            die;
+            $this->response->redirect("product");
         } else {
 
             echo "not Added successfully";

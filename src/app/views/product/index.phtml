@@ -1,24 +1,45 @@
 <?php
+session_start();
 
-echo $this->tag->linkTo(["signup","Signup Here","class"=>"btn btn-danger m-2"]);
-echo $this->tag->linkTo(["login","LOgin Here","class"=>"btn btn-danger m-2"]);
-echo $this->tag->linkTo(["signup","Signup Here","class"=>"btn btn-danger m-2"]);
-echo $this->tag->linkTo(["logout","Logout Here","class"=>"btn btn-danger m-2"]);
-echo $this->tag->linkTo(["setting","Setting Here","class"=>"btn btn-danger m-2"]);
+if (isset($_POST['language'])) {
+  $_SESSION['lang'] = $_POST['language'];
+
+}
+
+echo $this->tag->linkTo(["signup", $this->locale->_('Signup Here'), "class" => "btn btn-danger m-2"]);
+echo $this->tag->linkTo(["login", $this->locale->_("Login Here"), "class" => "btn btn-danger m-2"]);
+echo $this->tag->linkTo(["logout", $this->locale->_("Logout Here"), "class" => "btn btn-danger m-2"]);
+echo $this->tag->linkTo(["setting", $this->locale->_("Setting Here"), "class" => "btn btn-danger m-2"]);
 
 
-echo "<section style='background-color: #eee;'><h2>Product Page<div class='container py-5'>
+?>
+<form action="#" method="POST">
+  <label for='language'>Choose a language:</label>
+  <select name='language' id='langauge' onclick=this.form.submit()>
+    <option value='en-GB'>English</option>
+    <option value='fr'>French</option>
+  </select>
+</form>
+
+
+<?php
+
+echo "<section style='background-color: #eee;'>";
+echo $this->locale->_('Product Page');
+echo "
+<div class='container py-5'>
 <div class='row'>";
 foreach ($data as $key => $value) {
-        echo "<div class='col-md-12 col-lg-4 mb-4 mb-lg-0'>
+  echo "<div class='col-md-12 col-lg-4 mb-4 mb-lg-0'>
         <div class='card text-black'>
-        <img src='".$value['image']."'class='card-img-top' alt='".$value['name']."' />
+        <img src='" . $value['image'] . "'class='card-img-top' alt='" . $value['name'] . "' />
         <div class='card-body'><div class='text-center mt-1'><h4 class='card-title'>$value[name]</h4>
         <h6 class='text-primary mb-1 pb-3'>$ $value[price]</h6></div>";
-     echo $this->tag->linkTo(["order/buynow?id=".$value['id'],"Buy Now!","class"=>"btn btn-danger"]);
-       echo "
+  echo $this->tag->linkTo(["order/buynow?id=" . $value['id'], $this->locale->_("Buy Now"), "class" => "btn btn-danger"]);
+  echo "
         </div></div></div>";
-    }
+}
 echo "</div></div></section>";
 
 
+?>
