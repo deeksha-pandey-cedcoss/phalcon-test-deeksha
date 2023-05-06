@@ -22,7 +22,7 @@ class Listner extends Injectable
         $acl = new Memory();
 
         $role = $_GET['role'];
-        // echo $role;die;
+
 
         $acl->addRole('manager');
         $acl->addRole('user');
@@ -83,7 +83,7 @@ class Listner extends Injectable
                 'updatesorder',
             ]
         );
-        // $role = "guest";
+
         $controller = "index";
         $action = "index";
 
@@ -111,13 +111,13 @@ class Listner extends Injectable
 
         $validator = new Validator($tokenObject, 100);
         $validator
-        
-            
+
+
             ->validateSignature($signer, $passphrase);
 
 
-            $rolejwt=$tokenObject->getClaims()->getPayload();
-            echo $rolejwt;
+        $rolejwt = $tokenObject->getClaims()->getPayload();
+        echo $rolejwt;
         if (true === $acl->isAllowed($controller, $action, $role)) {
             echo 'Access granted!';
         } else {
